@@ -1,0 +1,15 @@
+{
+  "name": "polkadot-wallet",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:amalia20220301/polkadot-wallet.git",
+  "author": "mrzhao <zhaomengru2018@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@polkadot/api": "^9.3.3",
+    "@polkadot/keyring": "^10.1.7",
+    "@polkadot/ui-keyring": "^2.9.8",
+    "@polkadot/ui-settings": "^2.9.8",
+    "@polkadot/util-crypto": "^10.1.7"
+  }
+}
