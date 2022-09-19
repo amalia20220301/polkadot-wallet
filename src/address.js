@@ -4,6 +4,7 @@ import { ripemd160 } from '@noble/hashes/ripemd160';
 import {HDKey} from "@scure/bip32";
 import * as bip39 from 'bip39';
 import * as dotenv from 'dotenv'
+import {sha256} from "@noble/hashes/sha256";
 dotenv.config()
 
 export const getLedgerAddress=(words)=>{
@@ -18,15 +19,18 @@ export const getLedgerAddress=(words)=>{
 // getLedgerAddress(words)
 
 const getFingerprint = (publicKey) => {
-    return Buffer.from(ripemd160(publicKey)).readUInt32BE(0);
+    return Buffer.from(ripemd160(sha256(publicKey))).readUInt32BE(0);
 }
 
 export const getMFP= (words)=>{
     console.log({words})
     const seed = bip39.mnemonicToSeedSync(words)
     const node = HDKey.fromMasterSeed(Buffer.from(seed));
-    const mfp = getFingerprint(node.publicKey.slice(2))
-    console.log({mfp, publicKey: node.publicKey.slice(2)})
+    // 直接可以获取master fingerprint
+    console.log(node.fingerprint.toString('16'))
+    console.log(node.publicKey.toString())
+    // console.log(node.publicKey.slice(2).toString())
+    return getFingerprint(node.publicKey)
 }
 
-getMFP(process.env.kidney)
+console.log(getMFP(process.env.kidney).toString(16))
